@@ -17,10 +17,10 @@ class PostController extends Controller
     }
 
 
-    public function newPost(){
+    public function newPost()
+    {
 
-        return view("newPost",['tags'=> Label::all()]);
-
+        return view("newPost", ['tags' => Label::all()]);
     }
 
     public function createPost()
@@ -88,7 +88,7 @@ class PostController extends Controller
 
         $tag = request();
 
-        dd($tag->pelda[0]." és ".$tag->pelda[1]);
+        dd($tag->pelda[0] . " és " . $tag->pelda[1]);
 
         //return $tag["pelda"];
 

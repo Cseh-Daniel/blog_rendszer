@@ -17,7 +17,7 @@
 
         <label for="title">Cím:</label><br>
         <input type="text" name="title">
-        @error("title")
+        @error('title')
             <p>{{ $message }}</p>
         @enderror
         <br>
@@ -27,7 +27,7 @@
         <label for="text">Bejegyzés:</label><br>
         <textarea name="text" cols="50" rows="30"></textarea>
 
-        @error("text")
+        @error('text')
             <p>{{ $message }}</p>
         @enderror
         <br>
@@ -35,7 +35,7 @@
         <select class="tags" name="tags[]" id="tags" placeholder="Válasszon">
 
             @foreach ($tags as $tag)
-            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
             @endforeach
 
         </select>
@@ -50,7 +50,7 @@
     <script>
         $(document).ready(function() {
             $('.tags').select2({
-                placeholder:"Kérem válasszon",
+                placeholder: "Kérem válasszon",
                 tags: true
             });
         });

@@ -19,7 +19,7 @@
     <div>
 
         <form action="/tags" method="post">
-        @csrf
+            @csrf
             <select name="pelda[]" id="pelda" multiple="multiple">
                 <option value="egy">1</option>
                 <option value="ketto">2</option>
@@ -37,7 +37,7 @@
     <script>
         $(document).ready(function() {
             $('#pelda').select2({
-                placeholder:"Kérem válasszon",
+                placeholder: "Kérem válasszon",
                 tags: true
             });
         });

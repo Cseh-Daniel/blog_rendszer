@@ -6,7 +6,7 @@
     <title>Bejelentkezés</title>
 </head>
 <body>
-    
+
 @if(session()->has("reg_ok"))
 <div>
     <p>{{session("reg_ok")}}</p>
@@ -35,7 +35,7 @@
     @csrf
     <label for="email">E-mail:</label><br>
     <input type="text" name="email" value="{{old('email')}}">
-    
+
     @error("email")
     <p>{{$message}}</p>
     @enderror

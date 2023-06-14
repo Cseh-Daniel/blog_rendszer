@@ -7,9 +7,14 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
+
+    public function regForm(){
+
+        return view("register");
+
+    }
+
     public function registration(){
-
-
 
         $credentials=request()->validate([
             "email"=>["required","unique:users","email"],
@@ -21,8 +26,8 @@ class RegisterController extends Controller
 
         User::create($credentials);
 
-
-        return redirect("/")->with("reg_ok","A regisztráció sikeres!<br>Kérlek jelentkezz be!");
+        //jobb lenne ha a loginhoz dobna vissza üzenettel
+        return redirect("/registration")->with("reg_ok","A regisztráció sikeres!<br>Kérlek jelentkezz be!");
 
     }
 }

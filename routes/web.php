@@ -45,40 +45,31 @@ Route::get('/home', function () {
 Route::get("/", [PostController::class, "list"]);
 
 
-Route::get("login", function () {
-    return view('login');
-})->middleware("guest");
+Route::get("/registration",[RegisterController::class,"regForm"])->middleware("guest");
+Route::post("/registration", [RegisterController::class, "registration"])->middleware("guest");
 
-Route::post("/login", [LoginController::class, "login"])->name("login")->middleware("guest");
+Route::get("login",[LoginController::class,"loginForm"])->name("login")->middleware("guest");
 
+Route::post("/login", [LoginController::class, "login"])->middleware("guest");
 
 Route::post("/logout", [LoginController::class, "logout"])->middleware("auth");
 
-Route::get("/registration", function () {
-    return redirect("/");
-})->middleware("guest");
-
-Route::post("/registration", [RegisterController::class, "registration"])->middleware("guest");
-
-
-Route::get("/new-post",[PostController::class,"newPost"])->middleware("auth");
-
+Route::get("/new-post", [PostController::class, "newPost"])->middleware("auth");
 Route::post("/new-post", [PostController::class, "createPost"])->middleware("auth");
 
 Route::get("/posts/{post}", [PostController::class, "readPost"]);
 
-Route::get("/edit-post-form/{post}", [PostController::class,"editPostForm"])->middleware("auth");
-Route::post("/edit-post/{post}",[PostController::class,"editPost"]) -> middleware("auth");
+Route::get("/edit-post-form/{post}", [PostController::class, "editPostForm"])->middleware("auth");
+Route::post("/edit-post/{post}", [PostController::class, "editPost"])->middleware("auth");
 
-Route::get("/delete-post/{post}",[PostController::class,"deletePost"])-> middleware("auth");
+Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middleware("auth");
 
 
 //-----------------------TEST-----------------------------
 
-Route::get("/select2",function(){
+Route::get("/select2", function () {
 
-return view("select2");
-
+    return view("select2");
 });
 
-Route::post("/tags",[PostController::class,"tagging"]);
+Route::post("/tags", [PostController::class, "tagging"]);
