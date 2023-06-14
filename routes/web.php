@@ -27,23 +27,20 @@ Route::get('/home', function () {
 /**
  * post módosítás ✅
  * post törlés ✅
- * Seeder userhez es postokhoz
+ * Seeder user, post, label ✅
  *
  * formázás bootstrappal
  *
- * Címke tábla létrehozása
+ * Címke tábla létrehozása ✅
  * ez több a többhöz kapcsolattal a postokhoz
- * címkézés select2-vel
+ *
+ * címkézés select2-vel 👀
+ *  createpost címkézőssé alakítása
+ *  editpost címkézőssé alakítása
  *
  */
 
 //https://laracasts.com/series/laravel-8-from-scratch/episodes/8
-
-/**kijelentkezve Error JAVÍTANI
- * http://localhost:8000/new-post
- * Route [login] not defined.
- *
- */
 
 Route::get("/", [PostController::class, "list"]);
 
@@ -64,14 +61,9 @@ Route::get("/registration", function () {
 Route::post("/registration", [RegisterController::class, "registration"])->middleware("guest");
 
 
-Route::get(
-    "/new-post",
-    function () {
-        return view("newPost");
-    }
-)->middleware("auth");
+Route::get("/new-post",[PostController::class,"newPost"])->middleware("auth");
 
-Route::post("/new-post", [PostController::class, "newPost"])->middleware("auth");
+Route::post("/new-post", [PostController::class, "createPost"])->middleware("auth");
 
 Route::get("/posts/{post}", [PostController::class, "readPost"]);
 
@@ -79,3 +71,14 @@ Route::get("/edit-post-form/{post}", [PostController::class,"editPostForm"])->mi
 Route::post("/edit-post/{post}",[PostController::class,"editPost"]) -> middleware("auth");
 
 Route::get("/delete-post/{post}",[PostController::class,"deletePost"])-> middleware("auth");
+
+
+//-----------------------TEST-----------------------------
+
+Route::get("/select2",function(){
+
+return view("select2");
+
+});
+
+Route::post("/tags",[PostController::class,"tagging"]);
