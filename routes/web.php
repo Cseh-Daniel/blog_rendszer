@@ -32,12 +32,21 @@ Route::get('/home', function () {
  * formázás bootstrappal
  *
  * Címke tábla létrehozása ✅
- * ez több a többhöz kapcsolattal a postokhoz
+ *      több a többhöz kapcsolattal a postokhoz
  *
- * címkézés select2-vel 👀
- *  createpost címkézőssé alakítása
- *  editpost címkézőssé alakítása
+ *  Bejelentkezés és regisztráció ✅
+ *      Login ✅
+ *      Register✅
  *
+ *
+ *  címkézés select2-vel ☑️
+ *      createpost címkézőssé alakítása ☑️ csak 1 címke
+ *      editpost címkézőssé alakítása   ☑️ csak 1 címke
+ *
+ *  nem létező postokat ne lehessen megnézni és szerkeszteni get linkkel ✅
+ *
+ *  Ha az adatbázis nem fut azt is le kell kezelni
+ *  https://flareapp.io/share/Lm8zwZV7
  */
 
 //https://laracasts.com/series/laravel-8-from-scratch/episodes/8
@@ -59,7 +68,7 @@ Route::post("/new-post", [PostController::class, "createPost"])->middleware("aut
 
 Route::get("/posts/{post}", [PostController::class, "readPost"]);
 
-Route::get("/edit-post-form/{post}", [PostController::class, "editPostForm"])->middleware("auth");
+Route::get("/edit-post/{post}", [PostController::class, "editPostForm"])->middleware("auth");
 Route::post("/edit-post/{post}", [PostController::class, "editPost"])->middleware("auth");
 
 Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middleware("auth");

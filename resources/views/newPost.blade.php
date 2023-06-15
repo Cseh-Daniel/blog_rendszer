@@ -33,9 +33,9 @@
         <br>
 
         <select class="tags" name="tags[]" id="tags" placeholder="Válasszon">
-
+            <option value="null" disabled selected>Kérem válasszon!</option>
             @foreach ($tags as $tag)
-                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                <option value="#$lb{{ $tag->id }}">{{ $tag->name }}</option>
             @endforeach
 
         </select>

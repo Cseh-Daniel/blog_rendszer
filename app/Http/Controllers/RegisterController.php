@@ -27,7 +27,9 @@ class RegisterController extends Controller
         User::create($credentials);
 
         //jobb lenne ha a loginhoz dobna vissza üzenettel
-        return redirect("/registration")->with("reg_ok","A regisztráció sikeres!<br>Kérlek jelentkezz be!");
+        return redirect("/login")->with("reg_ok","A regisztráció sikeres! Kérlek jelentkezz be!");
 
     }
+
+
 }

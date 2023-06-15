@@ -13,10 +13,16 @@ class Label extends Model
         "name"
     ];
 
-    public function posts(){
+    public function posts()
+    {
 
         return $this->hasMany(Post::class);
-
     }
 
+    /*    public function whereName($name)
+    {
+
+        return Label::where('name', $name)->first();
+    }
+    */
 }

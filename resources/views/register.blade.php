@@ -9,12 +9,6 @@
 
 <body>
 
-    @if (session()->has('reg_ok'))
-        <div>
-            <p>{{ session('reg_ok') }}</p>
-        </div>
-    @endif
-
     <div>
         <h1>Regisztráció</h1>
         <form action="/registration" method="post">
@@ -48,6 +42,10 @@
             <input type="submit" value="Regisztrálás">
 
         </form>
+
+        <a href="/login">
+            <p>Van már fiókom!</p>
+        </a>
 
     </div>
 

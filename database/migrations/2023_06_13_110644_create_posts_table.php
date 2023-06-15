@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId("label_id");
             $table->string("title");
-            $table->text("text")->unique();
+
+            //$table->text("text")->unique();
+            $table->text("text");
+
             $table->foreignId("user_id");
             $table->timestamps();
         });

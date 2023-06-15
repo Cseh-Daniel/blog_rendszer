@@ -35,25 +35,66 @@ class PostController extends Controller
 
         /**
          * a select2 számot ad vissza ha a felhasználó már meglevő elemet választ,
-         * ha új opciót addmeg, akkor a beütött szöveget kapjuk meg.
+         * ha új opciót admeg, akkor a beütött szöveget kapjuk meg.
          */
 
-        $post["author_id"] = Auth::id();
-        dd($post);
-        //Post::create($post);
+        $post["user_id"] = Auth::id();
+
+        foreach ($post["tags"] as &$tag) {
+
+            if (str_starts_with($tag, '#$lb')) {
+
+                $tag = substr($tag, 4);
+            } else {
+
+                $tag = ucfirst($tag);
+
+                $newLb = Label::create([
+
+                    'name' => $tag
+
+                ]);
+                $tag = $newLb->id;
+            }
+        }
+
+        $post["label_id"] = $post["tags"][0];
+
+        // dd($post);
+
+        /* $result = "";
+        foreach ($post["tags"] as &$tag) {
+            $result .= $tag . " | ";
+        }
+
+
+        dd($result);*/
+
+        Post::create($post);
         return redirect("/")->with("post_ok", "Új bejegyzés létrehozva!");
     }
 
     public function readPost($id)
     {
-
-        return view('readPost', ['post' => Post::find($id)]);
+        $view = view('readpost', ['post' => Post::find($id)]);
+        return $this->checkPost($id, $view);
     }
 
     public function editPostForm($id)
     {
+        //$usedTags=Post::find($id)->label->id;
+        //$usedTags='#$lb'.$usedTags;
 
-        return view('editPost', ['post' => Post::find($id)]);
+        /* foreach($usedTags as &$tag){
+
+            $tag='#$lb'.$tag->id;
+
+        }*/
+
+        //dd($usedTags);
+
+        $view = view('editPost', ['post' => Post::find($id), 'tags' => Label::all(), 'usedTags' => Post::find($id)->label->id]);
+        return $this->checkPost($id,$view);
     }
 
     public function editPost($id)
@@ -62,12 +103,36 @@ class PostController extends Controller
         $req = request()->validate([
 
             "title" => ["required", "min:5", "max:30"],
-            "text" => ["required", "min:10"]
+            "text" => ["required", "min:10"],
+            "tags" => ["required"]
         ]);
+
+        foreach ($req["tags"] as &$tag) {
+
+            if (str_starts_with($tag, '#$lb')) {
+
+                $tag = substr($tag, 4);
+            } else {
+
+                $tag = ucfirst($tag);
+
+                $newLb = Label::create([
+
+                    'name' => $tag
+
+                ]);
+                $tag = $newLb->id;
+            }
+        }
+
+
 
         $post = Post::find($id);
         $post->title = $req["title"];
         $post->text = $req["text"];
+        $post["label_id"] = $req["tags"][0];
+        // $post["label_id"] = $req["tags"];
+        //dd($post);
         $post->update();
         //Post::save($post);
         return redirect("/")->with("post_ok", "Bejegyzés módosítva!");
@@ -84,13 +149,21 @@ class PostController extends Controller
     public function tagging()
     {
 
-
-
         $tag = request();
 
         dd($tag->pelda[0] . " és " . $tag->pelda[1]);
 
         //return $tag["pelda"];
 
+    }
+
+
+    public function checkPost($id, $view)
+    {
+        if (Post::find($id) == null) {
+            return redirect("/");
+        }
+
+        return $view;
     }
 }
