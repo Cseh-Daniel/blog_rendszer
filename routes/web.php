@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
  * post törlés ✅
  * Seeder user, post, label ✅
  *
- * formázás bootstrappal
+ * formázás bootstrappal ☑️
  *
  * Címke tábla létrehozása ✅
  *      több a többhöz kapcsolattal a postokhoz

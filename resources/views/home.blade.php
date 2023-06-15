@@ -21,13 +21,14 @@
                 <p>{{ session('post_ok') }}</p>
             </div>
         @endif
-
+        <H1 class="text-center">Blog rendszer</H1>
         <div>
-            <H1>Blog rendszer</H1>
+
+
             @auth
                 <form action="/logout" method="post">
                     @csrf
-                    <button class="btn btn-link" type="submit">Kijelentkezés</button>
+                    <button class="btn btn-link float-right" type="submit">Kijelentkezés</button>
 
                 </form>
             @else
