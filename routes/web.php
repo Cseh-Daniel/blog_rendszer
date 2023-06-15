@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Route;
  *  ékezetes betűvel kezdődő címkéket nem alakít nagybetűsre.
  *
  *  ❗❗❗ posztok szűrése címke alapján ❗❗❗
+ *  címke törlés, x posztonként legyen új oldal
+ *
  */
 
 Route::get("/", [PostController::class, "list"]);
