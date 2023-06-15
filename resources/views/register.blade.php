@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regisztráció</title>
+</head>
+
+<body>
+
+    <div>
+        <h1>Regisztráció</h1>
+        <form action="/registration" method="post">
+            @csrf
+            <label for="email">E-mail:</label><br>
+            <input type="text" name="email" value="{{ old('email') }}">
+
+            @error('email')
+                <p>{{ $message }}</p>
+            @enderror
+            <br>
+
+
+            <label for="name">Felhasználónév:</label><br>
+            <input type="text" name="name" value="{{ old('name') }}">
+            @error('name')
+                <p>{{ $message }}</p>
+            @enderror
+            <br>
+
+            <label for="password">Jelszó:</label><br>
+            <input type="password" name="password">
+            @error('password')
+                <p>{{ $message }}</p>
+            @enderror
+            <br>
+
+            <label for="password_confirmation">Jelszó újra:</label><br>
+            <input type="password" name="password_confirmation"><br>
+            <br>
+            <input type="submit" value="Regisztrálás">
+
+        </form>
+
+        <a href="/login">
+            <p>Van már fiókom!</p>
+        </a>
+
+    </div>
+
+</body>
+
+</html>

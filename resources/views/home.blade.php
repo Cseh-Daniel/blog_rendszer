@@ -52,7 +52,7 @@
 
 
 
-                    <form action="/edit-post-form/{{ $post->id }}" method="get">
+                    <form action="/edit-post/{{ $post->id }}" method="get">
                         <button type="submit">Módosítás</button>
                     </form>
                     <form action="/delete-post/{{ $post->id }}" method="get">

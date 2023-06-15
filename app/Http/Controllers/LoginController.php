@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
 
-    public function login(Request $req)
+    public function loginForm(){ return view('login');}
+
+    public function login()
     {
 
         $credentials = request()->validate([
@@ -26,7 +28,7 @@ class LoginController extends Controller
         /**
          * külön nézetbe szedni a bejelentkezést és regisztrálást
          */
-        throw ValidationException::withMessage(["logErr" => "Hibás email vagy jelszó"]);
+        throw ValidationException::withMessages(["logErr" => "Hibás email vagy jelszó!"]);
     }
 
     public function logout()

@@ -27,55 +27,58 @@ Route::get('/home', function () {
 /**
  * post módosítás ✅
  * post törlés ✅
- * Seeder userhez es postokhoz
+ * Seeder user, post, label ✅
  *
  * formázás bootstrappal
  *
- * Címke tábla létrehozása
- * ez több a többhöz kapcsolattal a postokhoz
- * címkézés select2-vel
+ * Címke tábla létrehozása ✅
+ *      több a többhöz kapcsolattal a postokhoz
  *
+ *  Bejelentkezés és regisztráció ✅
+ *      Login ✅
+ *      Register✅
+ *
+ *
+ *  címkézés select2-vel ☑️
+ *      createpost címkézőssé alakítása ☑️ csak 1 címke
+ *      editpost címkézőssé alakítása   ☑️ csak 1 címke
+ *
+ *  nem létező postokat ne lehessen megnézni és szerkeszteni get linkkel ✅
+ *
+ *  Ha az adatbázis nem fut azt is le kell kezelni
+ *  https://flareapp.io/share/Lm8zwZV7
  */
 
 //https://laracasts.com/series/laravel-8-from-scratch/episodes/8
 
-/**kijelentkezve Error JAVÍTANI
- * http://localhost:8000/new-post
- * Route [login] not defined.
- *
- */
-
 Route::get("/", [PostController::class, "list"]);
 
 
-Route::get("login", function () {
-    return view('login');
-})->middleware("guest");
+Route::get("/registration",[RegisterController::class,"regForm"])->middleware("guest");
+Route::post("/registration", [RegisterController::class, "registration"])->middleware("guest");
 
-Route::post("/login", [LoginController::class, "login"])->name("login")->middleware("guest");
+Route::get("login",[LoginController::class,"loginForm"])->name("login")->middleware("guest");
 
+Route::post("/login", [LoginController::class, "login"])->middleware("guest");
 
 Route::post("/logout", [LoginController::class, "logout"])->middleware("auth");
 
-Route::get("/registration", function () {
-    return redirect("/");
-})->middleware("guest");
-
-Route::post("/registration", [RegisterController::class, "registration"])->middleware("guest");
-
-
-Route::get(
-    "/new-post",
-    function () {
-        return view("newPost");
-    }
-)->middleware("auth");
-
-Route::post("/new-post", [PostController::class, "newPost"])->middleware("auth");
+Route::get("/new-post", [PostController::class, "newPost"])->middleware("auth");
+Route::post("/new-post", [PostController::class, "createPost"])->middleware("auth");
 
 Route::get("/posts/{post}", [PostController::class, "readPost"]);
 
-Route::get("/edit-post-form/{post}", [PostController::class,"editPostForm"])->middleware("auth");
-Route::post("/edit-post/{post}",[PostController::class,"editPost"]) -> middleware("auth");
+Route::get("/edit-post/{post}", [PostController::class, "editPostForm"])->middleware("auth");
+Route::post("/edit-post/{post}", [PostController::class, "editPost"])->middleware("auth");
 
-Route::get("/delete-post/{post}",[PostController::class,"deletePost"])-> middleware("auth");
+Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middleware("auth");
+
+
+//-----------------------TEST-----------------------------
+
+Route::get("/select2", function () {
+
+    return view("select2");
+});
+
+Route::post("/tags", [PostController::class, "tagging"]);
