@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Route;
  *  nem létező postokat ne lehessen megnézni és szerkeszteni get linkkel ✅
  *
  *  ékezetes betűvel kezdődő címkéket nem alakít nagybetűsre.
+ *
+ *  ❗❗❗ posztok szűrése címke alapján ❗❗❗
  */
 
 Route::get("/", [PostController::class, "list"]);

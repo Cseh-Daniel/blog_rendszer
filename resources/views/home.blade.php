@@ -31,7 +31,7 @@
 
                 </form>
             @else
-                <a href="/login"><Button>Bejelentkezés</Button></a>
+                <a href="/login"><Button class="btn btn-primary">Bejelentkezés</Button></a>
 
             @endauth
 
@@ -48,20 +48,26 @@
                 <div class="mt-3">
 
 
-                    <a href="/posts/{{ $post->id }}"><button class="btn btn-light"><h3>{{ $post->title }}</h3></button></a>
+                    <a href="/posts/{{ $post->id }}"><button class="btn btn-light">
+                            <h3>{{ $post->title }}</h3>
+                        </button></a>
                     <p class="m-3">{{ $post->text }}</p>
 
 
                     @auth
 
-
-
-                        <form action="/edit-post/{{ $post->id }}" method="get">
-                            <button class="btn btn-secondary" type="submit">Módosítás</button>
-                        </form>
-                        <form action="/delete-post/{{ $post->id }}" method="get">
-                            <button class="btn btn-danger" type="submit">Törlés</button>
-                        </form>
+                        <div class="d-inline-flex">
+                            <div class="mx-2 mb-1">
+                                <form action="/edit-post/{{ $post->id }}" method="get">
+                                    <button class="btn btn-secondary" type="submit">Módosítás</button>
+                                </form>
+                            </div>
+                            <div class="mb-1">
+                                <form action="/delete-post/{{ $post->id }}" method="get">
+                                    <button class="btn btn-danger" type="submit">Törlés</button>
+                                </form>
+                            </div>
+                        </div>
                     @endauth
                     <br>
 
@@ -71,6 +77,9 @@
 
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

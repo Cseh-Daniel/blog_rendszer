@@ -34,7 +34,7 @@
             @enderror
             <br>
 
-            <select class="form-control m-1" name="tags[]" id="tags" placeholder="Válasszon">
+            <select class="form-control" name="tags[]" id="tags" placeholder="Válasszon">
                 @foreach ($tags as $tag)
                     <option value="#$lb{{ $tag->id }}" {{-- @foreach ($usedTags as $select) --}}
                         @if ($usedTags === $tag->id) selected @endif {{-- @endforeach  --}}>
