@@ -5,25 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 
-//use App\Models\Post;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-/*
-Route::get('/home', function () {
-    return view('welcome');
-});
-*/
-
 /**
  * post módosítás ✅
  * post törlés ✅
@@ -45,11 +26,8 @@ Route::get('/home', function () {
  *
  *  nem létező postokat ne lehessen megnézni és szerkeszteni get linkkel ✅
  *
- *  Ha az adatbázis nem fut azt is le kell kezelni
- *  https://flareapp.io/share/Lm8zwZV7
+ *  ékezetes betűvel kezdődő címkéket nem alakít nagybetűsre.
  */
-
-//https://laracasts.com/series/laravel-8-from-scratch/episodes/8
 
 Route::get("/", [PostController::class, "list"]);
 
@@ -76,9 +54,3 @@ Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middle
 
 //-----------------------TEST-----------------------------
 
-Route::get("/select2", function () {
-
-    return view("select2");
-});
-
-Route::post("/tags", [PostController::class, "tagging"]);

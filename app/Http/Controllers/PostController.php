@@ -146,18 +146,6 @@ class PostController extends Controller
         return redirect("/")->with("post_ok", "Bejegyzés törölve!");
     }
 
-    public function tagging()
-    {
-
-        $tag = request();
-
-        dd($tag->pelda[0] . " és " . $tag->pelda[1]);
-
-        //return $tag["pelda"];
-
-    }
-
-
     public function checkPost($id, $view)
     {
         if (Post::find($id) == null) {
