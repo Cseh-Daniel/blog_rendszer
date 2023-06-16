@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory(3)->create();
 
+        User::create([
+
+            'name'=>'peldaUser',
+            'email'=>'pelda@user.com',
+            'password'=> 'password'
+        ]);
+
         $lb1 = Label::create([
 
             'name' => "Label1"
