@@ -7,16 +7,20 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
 use App\Models\Label;
+use App\Models\LabelPost;
+
 
 class PostController extends Controller
 {
 
-    public function list( $posts=false )
+    public function list($posts = false)
     {
-        if(!$posts){$posts=Post::whereNotNull("id")->simplePaginate(2);}
+        if (!$posts) {
+            $posts = Post::whereNotNull("id")->simplePaginate(2);
+        }
 
         return view("home", [
-            'posts' => $posts,"tags"=>Label::all()
+            'posts' => $posts, "tags" => Label::all()
         ]);
     }
 
@@ -30,7 +34,7 @@ class PostController extends Controller
     public function createPost()
     {
 
-        $post = request()->validate([
+        $req = request()->validate([
 
             "title" => ["required", "min:5", "max:30"],
             "text" => ["required", "min:10"],
@@ -42,9 +46,7 @@ class PostController extends Controller
          * ha új opciót admeg, akkor a beütött szöveget kapjuk meg.
          */
 
-        $post["user_id"] = Auth::id();
-
-        foreach ($post["tags"] as &$tag) {
+        foreach ($req["tags"] as &$tag) {
 
             if (str_starts_with($tag, '#$lb')) {
 
@@ -62,19 +64,13 @@ class PostController extends Controller
             }
         }
 
-        $post["label_id"] = $post["tags"][0];
+        $post["user_id"] = Auth::id();
+        $post["title"] = $req["title"];
+        $post["text"] = $req["text"];
 
-        // dd($post);
+        $post = Post::create($post);
+        $post->labels()->attach($req["tags"]);
 
-        /* $result = "";
-        foreach ($post["tags"] as &$tag) {
-            $result .= $tag . " | ";
-        }
-
-
-        dd($result);*/
-
-        Post::create($post);
         return redirect("/")->with("post_ok", "Új bejegyzés létrehozva!");
     }
 
@@ -86,30 +82,25 @@ class PostController extends Controller
 
     public function editPostForm($id)
     {
-        //$usedTags=Post::find($id)->label->id;
-        //$usedTags='#$lb'.$usedTags;
+        if (Post::find($id)->labels != null) {
 
-        /* foreach($usedTags as &$tag){
+            $usedTags = Post::find($id)->labels;
+            $ids = [];
+            foreach ($usedTags as $tag) {
+                array_push($ids, $tag->id);
+            }
+        } else {
 
-            $tag='#$lb'.$tag->id;
-
-        }*/
-
-        //dd($usedTags);
-
-        if(Post::find($id)->label != null){
-
-            $usedTags= Post::find($id)->label->id;
-
-        }else{
-
-            $usedTags=null;
-
+            $usedTags = null;
         }
 
         $view = view('editPost', ['post' => Post::find($id), 'tags' => Label::all(), 'usedTags' => $usedTags]);
-        return $this->checkPost($id,$view);
+        return $this->checkPost($id, $view);
     }
+
+
+
+
 
     public function editPost()
     {
@@ -140,18 +131,21 @@ class PostController extends Controller
             }
         }
 
-
-
         $post = Post::find($req["postID"]);
         $post->title = $req["title"];
         $post->text = $req["text"];
-        $post["label_id"] = $req["tags"][0];
-        // $post["label_id"] = $req["tags"];
-        //dd($post);
+
+        $oldLabels = LabelPost::where("post_id", $req["postID"])->get();
+        foreach ($oldLabels as $i) {
+            $i->delete();
+        }
+        $post->labels()->attach($req["tags"]);
+
         $post->update();
-        //Post::save($post);
+
         return redirect("/")->with("post_ok", "Bejegyzés módosítva!");
     }
+
 
     public function deletePost($id)
     {
@@ -171,17 +165,16 @@ class PostController extends Controller
     }
 
 
-    public function filterPost(){
+    public function filterPost()
+    {
 
-        $req=request()->validate([
+        $req = request()->validate([
 
-            "labelFilter" =>["required"]
+            "labelFilter" => ["required"]
 
         ]);
         //dd($req);
 
         return $this->list(Label::find($req["labelFilter"])->posts);
-
     }
-
 }

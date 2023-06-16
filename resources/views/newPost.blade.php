@@ -35,8 +35,8 @@
             @enderror
             <br>
 
-            <select class="form-control" name="tags[]" id="tags" placeholder="Válasszon">
-                <option value="null" disabled selected>Kérem válasszon!</option>
+            <select class="form-control" name="tags[]" id="tags" placeholder="Válasszon" multiple>
+                {{-- <option value="null" disabled selected>Kérem válasszon!</option> --}}
                 @foreach ($tags as $tag)
                     <option value="#$lb{{ $tag->id }}">{{ $tag->name }}</option>
                 @endforeach

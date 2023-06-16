@@ -9,25 +9,29 @@ class Post extends Model
 {
     use HasFactory;
 
-        protected $fillable = [
+    protected $fillable = [
         "title",
         "text",
-        "user_id",
-        "label_id"
+        "user_id"/*,
+        "label_id"*/
     ];
 
-
+    /*
     public function label(){
 
         return $this->belongsTo(Label::class);
 
     }
+*/
+    public function labels()
+    {
 
-    public function user(){
-
-        return $this->belongsTo(User::class);
-
+        return $this->belongsToMany(Label::class, 'label_posts');
     }
 
+    public function user()
+    {
 
+        return $this->belongsTo(User::class);
+    }
 }

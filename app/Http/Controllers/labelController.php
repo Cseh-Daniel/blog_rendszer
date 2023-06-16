@@ -29,4 +29,5 @@ class labelController extends Controller
         $lb->delete();
         return redirect("/")->with("post_ok", '"' . $name . '" címke törölve!');
     }
+
 }
