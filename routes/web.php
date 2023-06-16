@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
  * formázás bootstrappal ☑️
  *
  * Címke tábla létrehozása ✅
- *      több a többhöz kapcsolattal a postokhoz
+ *      több a többhöz kapcsolattal a postokhoz ❗❗❗
  *
  *  Bejelentkezés és regisztráció ✅
  *      Login ✅
@@ -26,9 +26,8 @@ use Illuminate\Support\Facades\Route;
  *
  *  nem létező postokat ne lehessen megnézni és szerkeszteni get linkkel ✅
  *
- *  ékezetes betűvel kezdődő címkéket nem alakít nagybetűsre.
  *
- *  ❗❗❗ posztok szűrése címke alapján ❗❗❗
+ *  ❗❗❗ posztok szűrése címke alapján  ✅
  *  címke törlés, x posztonként legyen új oldal
  *
  */
@@ -55,6 +54,19 @@ Route::post("/edit-post/{post}", [PostController::class, "editPost"])->middlewar
 
 Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middleware("auth");
 
+Route::get("/filter-post", [PostController::class, "filterPost"]);
+
+/**
+ * Címkék törlése form
+ */
+
+//Route::get("/label-delete")
+
+/**
+ * címke törlése
+ */
+
+ //Route::post("label-delete/[label]")
 
 //-----------------------TEST-----------------------------
 

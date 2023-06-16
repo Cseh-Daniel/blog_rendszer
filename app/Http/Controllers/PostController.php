@@ -11,9 +11,11 @@ use App\Models\Label;
 class PostController extends Controller
 {
 
-    public function list()
+    public function list( $posts=false )
     {
-        return view("home", ['posts' => Post::all()]);
+        if(!$posts){$posts=Post::all();}
+
+        return view("home", ['posts' => $posts,"tags"=>Label::all()]);
     }
 
 
@@ -154,4 +156,19 @@ class PostController extends Controller
 
         return $view;
     }
+
+
+    public function filterPost(){
+
+        $req=request()->validate([
+
+            "labelFilter" =>["required"]
+
+        ]);
+        //dd($req);
+
+        return $this->list(Label::find($req["labelFilter"])->posts);
+
+    }
+
 }
