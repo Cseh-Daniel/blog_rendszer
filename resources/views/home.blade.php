@@ -33,6 +33,8 @@
 
             @endauth
 
+            <a href="/delete-label" class="btn btn-outline-danger ">Címke törlés</a>
+
             <a href="/" class="navbar-brand">Blog rendszer</a>
 
             <form action="/filter-post" class="d-flex" role="search">
@@ -79,12 +81,13 @@
                                     </button></a>
                             </div>
 
-                            @if ($post->label != null)
-                                <div class="mt-2">
+                            @if ($post->labels != null)
+                                <div class="mt-2 ms-3">
 
-                                    <span
-                                        class="m-3 p-1 px-2 rounded-5 bg-secondary-subtle">{{ $post->label->name }}</span>
-
+                                    @foreach ($post->labels as $label)
+                                        <span
+                                            class="p-1 px-2 rounded-5 bg-secondary-subtle">{{ $label->name }}</span>
+                                    @endforeach
                                 </div>
                             @endif
                         </span>
@@ -116,6 +119,7 @@
 
                 </div>
             @endforeach
+
             @if (Request::path() == '/')
                 <div class="mt-4 d-flex justify-content-center">
                     {{ $posts->links() }}

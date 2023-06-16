@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\Route;
  * formázás bootstrappal ✅
  *
  * Címke tábla létrehozása ✅
- *      több a többhöz kapcsolattal a postokhoz ❗❗❗
+ *      több a többhöz kapcsolattal a postokhoz ✅
  *
  *  Bejelentkezés és regisztráció ✅
  *      Login ✅
  *      Register✅
  *
  *
- *  címkézés select2-vel ☑️
- *      createpost címkézőssé alakítása ☑️ csak 1 címke
- *      editpost címkézőssé alakítása   ☑️ csak 1 címke
+ *  címkézés select2-vel ✅
+ *      createpost címkézőssé alakítása ✅
+ *      editpost címkézőssé alakítása   ✅
+ *
+ *      createpost, editpost többcímkével ✅
  *
  *  nem létező postokat ne lehessen megnézni és szerkeszteni get linkkel ✅
  *
@@ -33,13 +35,13 @@ use Illuminate\Support\Facades\Route;
  *
  */
 
-Route::get("/", [PostController::class, "list"]);
+Route::get("/", [PostController::class, "list"])->name("home");
 
 
-Route::get("/registration",[RegisterController::class,"regForm"])->middleware("guest");
+Route::get("/registration", [RegisterController::class, "regForm"])->middleware("guest");
 Route::post("/registration", [RegisterController::class, "registration"])->middleware("guest");
 
-Route::get("login",[LoginController::class,"loginForm"])->name("login")->middleware("guest");
+Route::get("login", [LoginController::class, "loginForm"])->name("login")->middleware("guest");
 
 Route::post("/login", [LoginController::class, "login"])->middleware("guest");
 
@@ -57,17 +59,6 @@ Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middle
 
 Route::get("/filter-post", [PostController::class, "filterPost"]);
 
-/**
- * Címkék törlése form
- */
+Route::get("/delete-label", [LabelController::class, "deleteLabelForm"])->middleware("auth");
 
-Route::get("/delete-label",[LabelController::class, "deleteLabelForm"])->middleware("auth");
-
-/**
- * címke törlése
- */
-
- Route::post("/delete-label",[labelController::class,"deleteLabel"])->middleware("auth");
-
-//-----------------------TEST-----------------------------
-
+Route::post("/delete-label", [labelController::class, "deleteLabel"])->middleware("auth");
