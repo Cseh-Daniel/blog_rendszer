@@ -5,7 +5,7 @@ A repo klónozása után, a projekt gyökérkönytárában, parancssorból futta
 
 - composer install 
 - php artisan migrate:fresh --seed
-
+- php artisan serve
 A regisztráció mellett 1 alapértelmezett felhasználót kapunk, valamint több előre generáltat is.
 
 Az alap felhasználó belépésének adatai:
