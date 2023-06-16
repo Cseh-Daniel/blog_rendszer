@@ -17,8 +17,10 @@
 
     <div class="content bg-white m-5 p-5 rounded-5 shadow">
         <h1>Bejegyzés szerkesztése</h1>
-        <form action="/edit-post/{{ $post->id }}" method=post>
+        <form action="/edit-post" method=post>
             @csrf
+
+            <input type="hidden" name="postID" value="{{ $post->id }}">
 
             <label class="form-label" for="title">Cím:</label><br>
             <input class="form-control " type="text" name="title" value="{{ $post->title }}">

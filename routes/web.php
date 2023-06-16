@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
  * post törlés ✅
  * Seeder user, post, label ✅
  *
- * formázás bootstrappal ☑️
+ * formázás bootstrappal ✅
  *
  * Címke tábla létrehozása ✅
  *      több a többhöz kapcsolattal a postokhoz ❗❗❗
@@ -28,7 +28,8 @@ use Illuminate\Support\Facades\Route;
  *
  *
  *  ❗❗❗ posztok szűrése címke alapján  ✅
- *  címke törlés, x posztonként legyen új oldal
+ *  címke törlés,✅
+ *  x posztonként legyen új oldal ✅
  *
  */
 
@@ -50,7 +51,7 @@ Route::post("/new-post", [PostController::class, "createPost"])->middleware("aut
 Route::get("/posts/{post}", [PostController::class, "readPost"]);
 
 Route::get("/edit-post/{post}", [PostController::class, "editPostForm"])->middleware("auth");
-Route::post("/edit-post/{post}", [PostController::class, "editPost"])->middleware("auth");
+Route::post("/edit-post", [PostController::class, "editPost"])->middleware("auth");
 
 Route::get("/delete-post/{post}", [PostController::class, "deletePost"])->middleware("auth");
 
@@ -60,13 +61,13 @@ Route::get("/filter-post", [PostController::class, "filterPost"]);
  * Címkék törlése form
  */
 
-//Route::get("/label-delete")
+Route::get("/delete-label",[LabelController::class, "deleteLabelForm"])->middleware("auth");
 
 /**
  * címke törlése
  */
 
- //Route::post("label-delete/[label]")
+ Route::post("/delete-label",[labelController::class,"deleteLabel"])->middleware("auth");
 
 //-----------------------TEST-----------------------------
 

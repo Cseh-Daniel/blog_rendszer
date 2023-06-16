@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("label_id");
+            //ezt megkell nézni---------
+            $table->foreignId("label_id")->nullable()->onDelete('set null');
             $table->string("title");
 
             //$table->text("text")->unique();

@@ -13,9 +13,11 @@ class PostController extends Controller
 
     public function list( $posts=false )
     {
-        if(!$posts){$posts=Post::all();}
+        if(!$posts){$posts=Post::whereNotNull("id")->simplePaginate(2);}
 
-        return view("home", ['posts' => $posts,"tags"=>Label::all()]);
+        return view("home", [
+            'posts' => $posts,"tags"=>Label::all()
+        ]);
     }
 
 
@@ -95,18 +97,29 @@ class PostController extends Controller
 
         //dd($usedTags);
 
-        $view = view('editPost', ['post' => Post::find($id), 'tags' => Label::all(), 'usedTags' => Post::find($id)->label->id]);
+        if(Post::find($id)->label != null){
+
+            $usedTags= Post::find($id)->label->id;
+
+        }else{
+
+            $usedTags=null;
+
+        }
+
+        $view = view('editPost', ['post' => Post::find($id), 'tags' => Label::all(), 'usedTags' => $usedTags]);
         return $this->checkPost($id,$view);
     }
 
-    public function editPost($id)
+    public function editPost()
     {
 
         $req = request()->validate([
 
             "title" => ["required", "min:5", "max:30"],
             "text" => ["required", "min:10"],
-            "tags" => ["required"]
+            "tags" => ["required"],
+            "postID" => ["required"]
         ]);
 
         foreach ($req["tags"] as &$tag) {
@@ -129,7 +142,7 @@ class PostController extends Controller
 
 
 
-        $post = Post::find($id);
+        $post = Post::find($req["postID"]);
         $post->title = $req["title"];
         $post->text = $req["text"];
         $post["label_id"] = $req["tags"][0];

@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -77,11 +78,15 @@
                                         <h4>{{ $post->title }}</h4>
                                     </button></a>
                             </div>
-                            <div class="mt-2">
 
-                                <span class="m-3 p-1 px-2 rounded-5 bg-secondary-subtle">{{ $post->label->name }}</span>
+                            @if ($post->label != null)
+                                <div class="mt-2">
 
-                            </div>
+                                    <span
+                                        class="m-3 p-1 px-2 rounded-5 bg-secondary-subtle">{{ $post->label->name }}</span>
+
+                                </div>
+                            @endif
                         </span>
 
                         <span> {{ $post->user->name }}
@@ -111,10 +116,18 @@
 
                 </div>
             @endforeach
-
-
+            @if (Request::path() == '/')
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $posts->links() }}
+                </div>
+            @endif
         </div>
+
     </div>
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>
